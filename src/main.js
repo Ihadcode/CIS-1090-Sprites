@@ -16,12 +16,14 @@ games.forEach(game=>{
     shelf.appendChild(div);
 
     div.addEventListener('click', ()=>loadGame(game));
+
 });
 
 //HTML Elements to update
 let app = document.querySelector("#app");
 let scoreSpan = document.querySelector("#score > span");
 let spriteDivs = document.querySelectorAll("#app > div.sprite");
+let timer = document.querySelectorAll("#Timer");
 
 //Initialize the sprite array
 let sprites = [];
@@ -66,19 +68,19 @@ let up, down, left, right, space;
 document.onkeyup = document.onkeydown = function (event) {
     let pressed = event.type == "keydown";
     switch (event.key) {
-        case 'ArrowUp':
+        case 'w':
             event.preventDefault();
             up = pressed;
             break;
-        case 'ArrowDown':
+        case 's':
             event.preventDefault();
             down = pressed;
             break;
-        case 'ArrowLeft':
+        case 'a':
             event.preventDefault();
             left = pressed;
             break;
-        case 'ArrowRight':
+        case 'd':
             event.preventDefault();
             right = pressed;
             break;
@@ -108,6 +110,7 @@ function frame() {
 
         //update the score
         scoreSpan.innerText = score;
+
 
         //Update the sprites
         for (let s = 0; s < sprites.length; s++) {

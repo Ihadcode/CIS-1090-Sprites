@@ -1,10 +1,17 @@
 //You might have some game state so you can keep track of
 //what is happening:
-let score;  //The players score
+let score = 20;  //The players score
 let alive;  //is the 
 
+let timer = 0;
+
+function Timer(){
+30000;
+
+}
+
 //You might have some constants that you use
-const speed = 300;  //In pixels per second
+let speed = 200;  //In pixels per second
 
 //This is a helper function to compute the distance
 //between two sprites
@@ -19,24 +26,33 @@ function setup(sprites) {
     score = 0;      //set score to zero
     alive = true;   //Set player to alive
 
+
     //Sprite "Images" are just characters,
     //But you can use emojis!
     // https://emojis.wiki/
 
-    sprites[0].image = "🚒"; //A fire engine
+    sprites[0].image = "⚪"; //A fire engine
     sprites[0].x = 100;
     sprites[0].y = 100;
 
     //Putting two sprites together you
     //can make more complicated things.
-    sprites[1].image = "🏠"; //A fire engine
+    sprites[1].image = "☃️"; //A fire engine
     sprites[1].x = 300;
     sprites[1].y = 100;
-    sprites[2].image = "🔥"; //A fire engine
-    sprites[2].x = 300;
-    sprites[2].y = 120;
+
+    sprites[2].image = "🏂"; //A fire engine
+    sprites[2].x = 460;
+    sprites[2].y = 200;
+
+    sprites [3].image ="🎄"
+    sprites [3].x = 500;
+    sprites [3].y =250;
+
 
 }
+
+//This function returns a random integer [0...max)
 
 /**
  * This function is called every frame
@@ -53,9 +69,23 @@ function setup(sprites) {
 function frame(sprites, t, dt, up, down, left, right, space) {
     //Keep references to the sprites in some variables with
     //better names:
-    const truck = sprites[0]; //Easier to remember
-    const house = sprites[1]; //Easier to remember
-    const fire = sprites[2]; //Easier to remember
+    const Snowball = sprites[0]; //Easier to remember
+    const SnowMan = sprites[1]; //Easier to remember
+    const SnowBoarder = sprites[2]; //Easier to remember
+    const tree = sprites[3]; 
+
+    timer += dt;
+
+    if (Math.random()> .99){
+        sprites[1].x = Math.random() * 750;
+        sprites[1].y = Math.random() * 450; 
+        sprites[2].x = Math.random() * 750;
+        sprites[2].y = Math.random() * 450; 
+        sprites[3].x = Math.random() * 750;
+        sprites[3].y = Math.random() * 450; 
+    }
+
+
 
     //Move the fire engine
     if (up) {
@@ -66,25 +96,63 @@ function frame(sprites, t, dt, up, down, left, right, space) {
         //Multiply them together so that the
         //truck moves at the same speed if the
         //computer is fast or slow
-        truck.y += speed * dt;
+        Snowball.y += speed * dt;
     } 
     if (down) {
-        truck.y -= speed * dt;
+        Snowball.y -= speed * dt;
     }
     if (right) {
-        truck.x += speed * dt;
+        Snowball.x += speed * dt;
         //You can flipH a spright so it is facing
         //the other direction
-        truck.flipH = true;
+        Snowball.flipH = true;
     }
     if (left) {
-        truck.x -= speed * dt;
-        truck.flipH = false;
+        Snowball.x -= speed * dt;
+        Snowball.flipH = false;
     }
 
+    if (Snowball.x<0){
+        Snowball.x= 200 ;
+        Snowball.y= 200;
+    }
+
+
+    if (Snowball.y<0){
+        Snowball.x=20;
+        Snowball.y=20;
+    }
+    if (Snowball.y>450){
+        Snowball.x=250;
+        Snowball.y=250;
+    }
+
+    if (Snowball.x>750){
+        Snowball.x = 450;
+        Snowball.y = 300;
+    }
+    
     //If the truck is close to the house
-    if ( distance(truck, house) < 10 ){
-        fire.image = ""; //Make the fire go away
+    if ( distance(Snowball, SnowMan) < 15 ){
+        score = score +10; 
+          speed = speed + 50 ;
+        SnowMan.x = Math.random;
+        SnowMan.y = Math.random ;
+          //Make the fire go away
+    }
+
+    if (distance (Snowball, SnowBoarder) < 15 ) {
+        score = score -5; 
+         speed = speed - 10;
+        SnowBoarder.x = Math.random;
+        SnowBoarder.y = Math.random;
+         
+    }
+    
+    if (distance (Snowball,tree) < 40){
+       Snowball.image ="";
+
+        alert ("game over"); 
     }
 
     //A very simple repeating animation
