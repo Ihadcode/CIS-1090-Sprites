@@ -3,14 +3,24 @@
 let score = 20;  //The players score
 let alive;  //is the 
 
-let timer = 0;
+var timer;
 
-function Timer(){
-30000;
+var remainingTime = 30;
+const startTimer = () => {
+    if (isStopped) {
+      isStopped = false;
+      countContainer.innerHTML = remainingTime;
+      timer = setInterval(renderTime, 1000);
+    }
+  };
+  const renderTime = () => {
+    // decement time
+    remainingTime -= 1;
+    // render count on the screen
+    countContainer.innerHTML = remainingTime;
+  }
 
-}
 
-//You might have some constants that you use
 let speed = 200;  //In pixels per second
 
 //This is a helper function to compute the distance
@@ -31,21 +41,21 @@ function setup(sprites) {
     //But you can use emojis!
     // https://emojis.wiki/
 
-    sprites[0].image = "⚪"; //A fire engine
+    sprites[0].image = "⚪"; // Main player is a snowball
     sprites[0].x = 100;
     sprites[0].y = 100;
 
     //Putting two sprites together you
     //can make more complicated things.
-    sprites[1].image = "☃️"; //A fire engine
+    sprites[1].image = "☃️"; //A target you want to hit for points
     sprites[1].x = 300;
     sprites[1].y = 100;
 
-    sprites[2].image = "🏂"; //A fire engine
+    sprites[2].image = "🏂"; //A TARGET YOU WANT TO AVOID minus points.
     sprites[2].x = 460;
     sprites[2].y = 200;
 
-    sprites [3].image ="🎄"
+    sprites [3].image ="🎄"// The tree will end the game. 
     sprites [3].x = 500;
     sprites [3].y =250;
 
@@ -75,7 +85,7 @@ function frame(sprites, t, dt, up, down, left, right, space) {
     const tree = sprites[3]; 
 
     timer += dt;
-
+    //To randomly move the sprits
     if (Math.random()> .99){
         sprites[1].x = Math.random() * 750;
         sprites[1].y = Math.random() * 450; 
@@ -87,7 +97,7 @@ function frame(sprites, t, dt, up, down, left, right, space) {
 
 
 
-    //Move the fire engine
+    //Move the snowball 
     if (up) {
         //Speed is in pixels per second, and
         //dt is the number of seconds that have
@@ -111,7 +121,7 @@ function frame(sprites, t, dt, up, down, left, right, space) {
         Snowball.x -= speed * dt;
         Snowball.flipH = false;
     }
-
+    //To check the position of the snowball. 
     if (Snowball.x<0){
         Snowball.x= 200 ;
         Snowball.y= 200;
@@ -132,13 +142,13 @@ function frame(sprites, t, dt, up, down, left, right, space) {
         Snowball.y = 300;
     }
     
-    //If the truck is close to the house
+    //If the snowball is close to the snowman
     if ( distance(Snowball, SnowMan) < 15 ){
         score = score +10; 
           speed = speed + 50 ;
         SnowMan.x = Math.random;
         SnowMan.y = Math.random ;
-          //Make the fire go away
+          
     }
 
     if (distance (Snowball, SnowBoarder) < 15 ) {

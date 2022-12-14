@@ -38,6 +38,7 @@ body {
   font-size: x-large;
 }
 
+
 #tv {
   margin: auto;
   display: inline-block;
@@ -109,6 +110,8 @@ body {
 #shelf > .game > .icon {
   font-size: 30px;
 }
+
+
 
 #shelf > .game > h2 {
 
